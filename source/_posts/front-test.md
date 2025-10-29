@@ -1,5 +1,5 @@
 ---
-title: '前端知识'
+title: '什么是闭包'
 date: 2025-10-28
 ---
 # 闭包是什么?在实际项目中有哪些应用场景?
@@ -8,7 +8,7 @@ date: 2025-10-28
 ### 任何闭包的使用场景都离不开这两点:
 #### 1.创建私有变量
 #### 2.延长变量的生命周期
-## 柯里化函数
+## 二.柯里化函数
 ### 柯里化的目的在于避免频繁调用具有相同参数函数的同时,又能轻松的重用
 
 ```javascript
@@ -69,4 +69,35 @@ console.log(Counter2.value()); /* logs 0 */
 ```
 ## 其他场景
 #### 例如计数器\延迟调用\回调等闭包的应用,其核心思想还是创建私用变量和延长变量的生命周期
+
+## 三.闭包的缺点
+#### 如果不是某些特定任务需要使用闭包,在其他函数里创建函数是不明智的,因为闭包在处理速度和内存消耗方面对脚本性能具有负面影响
+#### 例如在创建新的对象或者类时,方法应该关联于对象的模型而不是定义到对象的构造器中.
+#### 原因在于每个对象的创建,方法都会被重新赋值
+```javascript
+function MyObject(name, message) {
+  this.name = name.toString();
+  this.message = message.toString();
+  this.getName = function() {
+    return this.name;
+  };
+
+  this.getMessage = function() {
+    return this.message;
+  };
+}
+```
+#### 上面的代码没有用到闭包的好处,因此可以避免使用闭包
+```javascript
+function MyObject(name, message) {
+  this.name = name.toString();
+  this.message = message.toString();
+}
+MyObject.prototype.getName = function() {
+  return this.name;
+};
+MyObject.prototype.getMessage = function() {
+  return this.message;
+};
+```
 
